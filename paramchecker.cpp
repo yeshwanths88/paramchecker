@@ -7,14 +7,14 @@ bool bpmOk(float bpm) {
 }
 
 bool spo2Ok(float spo2) {
-  if(spo2 < 70 || spo2 > 150) {
+  if(spo2 < 80) {
     return false;
   }
   return true;
 }
 
 bool respRateOk(float respRate) {
-  if(respRate < 70 || respRate > 150) {
+  if(respRate < 30 || respRate > 60) {
     return false;
   }
   return true;
