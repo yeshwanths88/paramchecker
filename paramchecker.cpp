@@ -1,15 +1,4 @@
 
-bool vitalsAreOk(float bpm, float spo2, float respRate) {
-  bool bpm_ok, spo2_ok, respRate_ok;
-  bpm_ok = bpmOk(bpm);
-
-  spo2_ok = spo2Ok(spo2);
-
-  respRate_ok = respRateOk(respRate);
-
-  return bpm_ok && spo2_ok && respRate_ok;
-}
-
 bool bpmOk(float bpm) {
   if(bpm < 70 || bpm > 150) {
     return false;
@@ -29,4 +18,15 @@ bool respRateOk(float respRate) {
     return false;
   }
   return true;
+}
+
+bool vitalsAreOk(float bpm, float spo2, float respRate) {
+  bool bpm_ok, spo2_ok, respRate_ok;
+  bpm_ok = bpmOk(bpm);
+
+  spo2_ok = spo2Ok(spo2);
+
+  respRate_ok = respRateOk(respRate);
+
+  return bpm_ok && spo2_ok && respRate_ok;
 }
