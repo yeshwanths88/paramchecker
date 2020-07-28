@@ -1,32 +1,33 @@
+#define BPM_MIN 70
+#define BPM_MAX 150
+#define SPO2_MIN 80
+#define RESP_RATE_MIN 30
+#define RESP_RATE_MAX 60
+
+bool isLower(float val, float maxVal) {
+  return (val < maxVal);
+}
+
+bool isGreater(float val, float minVal) {
+  return (val > minVal);
+}
+
+bool isInBetween(float val, float minVal, float maxVal) {
+  return (isLower(val, maxVal) && isGreater(val, minVal));
+}
 
 bool bpmOk(float bpm) {
-  if(bpm < 70 || bpm > 150) {
-    return false;
-  }
-  return true;
+  return isInBetween(bpm, BPM_MIN, BPM_MAX);
 }
 
 bool spo2Ok(float spo2) {
-  if(spo2 < 80) {
-    return false;
-  }
-  return true;
+  return isGreater(spo2, SPO2_MIN);
 }
 
 bool respRateOk(float respRate) {
-  if(respRate < 30 || respRate > 60) {
-    return false;
-  }
-  return true;
+  return isInBetween(respRate, RESP_RATE_MIN, RESP_RATE_MAX);
 }
 
 bool vitalsAreOk(float bpm, float spo2, float respRate) {
-  bool bpm_ok, spo2_ok, respRate_ok;
-  bpm_ok = bpmOk(bpm);
-
-  spo2_ok = spo2Ok(spo2);
-
-  respRate_ok = respRateOk(respRate);
-
-  return bpm_ok && spo2_ok && respRate_ok;
+  return (bpmOk(bpm) && spo2Ok(spo2) && respRateOk(respRate));
 }
