@@ -1,6 +1,7 @@
 #define BPM_MIN 70
 #define BPM_MAX 150
 #define SPO2_MIN 80
+#define SPO2_MAX 100
 #define RESP_RATE_MIN 30
 #define RESP_RATE_MAX 60
 
@@ -31,3 +32,25 @@ bool respRateOk(float respRate) {
 bool vitalsAreOk(float bpm, float spo2, float respRate) {
   return (bpmOk(bpm) && spo2Ok(spo2) && respRateOk(respRate));
 }
+
+class Vital
+{
+public:
+  Vital(float minVal, float maxVal)
+  : minVal(minVal)
+  , maxVal(maxVal)
+  {
+    
+  }
+  bool isVitalOk(float reading) {
+    return (!isOutOfRange(reading));
+  }
+private:
+  bool isOutOfRange(reading) {
+    return (reading < minVal || reading > maxVal)
+  }
+  const float minVal;
+  const float maxVal;
+}
+
+

@@ -1,6 +1,6 @@
 #include "paramchecker.h"
 #include <gtest/gtest.h>
- 
+
 TEST(VitalsTest, BPM) { 
     ASSERT_EQ(true, vitalsAreOk(100, 100, 50));
 }
