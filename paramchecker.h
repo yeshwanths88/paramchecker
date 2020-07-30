@@ -17,7 +17,7 @@ enum VITAL_STATUS {
 enum VITAL_ALERT {
   all_is_well,
   lung_failure
-}
+};
 
 struct Measurement{
     VITAL_ID id;
