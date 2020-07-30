@@ -8,6 +8,17 @@ enum VITAL_ID {
   avgECG
 };
 
+enum VITAL_STATUS {
+  low,
+  normal,
+  high
+};
+
+enum VITAL_ALERT {
+  all_is_well,
+  lung_failure
+}
+
 struct Measurement{
     VITAL_ID id;
     float measured_value;
@@ -15,7 +26,7 @@ struct Measurement{
 
 class IVitalCheck {
   public:
-    virtual bool measurementIsOk(float measurement) = 0; //pure virtual
+    virtual VITAL_STATUS measurementIsOk(float measurement) = 0; //pure virtual
 };
 
 class VitalRangeCheck: public IVitalCheck {
@@ -24,8 +35,21 @@ class VitalRangeCheck: public IVitalCheck {
       m_lower = lower;
       m_upper = upper;
     }
-    virtual bool measurementIsOk(float measurement) {
-      return (measurement >= m_lower && measurement <= m_upper);
+    virtual VITAL_STATUS measurementIsOk(float measurement) {
+      VITAL_STATUS v_status;
+      if(measurement < m_lower)
+      {
+        v_status = low;
+      }
+      else if(measurement > m_upper)
+      {
+        v_status = high;
+      }
+      else
+      {
+        v_status = normal;
+      }
+      return v_status;
     }
   private:
     float m_lower;
@@ -37,11 +61,25 @@ class VitalValueCheck: public IVitalCheck {
     explicit VitalValueCheck(float alarmValue) {
       m_alarmValue = alarmValue;
     }
-    virtual bool measurementIsOk(float measurement) {
-      return std::abs(measurement - m_alarmValue) < 0.001;
+    virtual VITAL_STATUS measurementIsOk(float measurement) {
+      VITAL_STATUS v_status;
+      if(std::abs(measurement - m_alarmValue) < 0.001)
+      {
+        v_status = normal;
+      }
+      else if((measurement - m_alarmValue) < 0)
+      {
+        v_status = low;
+      }
+      else
+      {
+        v_status = high;
+      }
     }
   private:
     float m_alarmValue;
 };
 
-std::vector<bool> vitalsAreOk(const std::vector<Measurement>& measurements);
+std::vector<VITAL_STATUS> vitalsAreOk(const std::vector<Measurement>& measurements);
+VITAL_ALERT vitalAlerts(const std::vector<Measurement>& measurements, const std::vector<VITAL_STATUS>& vital_status);
+

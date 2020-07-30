@@ -9,12 +9,18 @@ IVitalCheck* vitalCheckers[] = {
   [avgECG] = new VitalValueCheck(0),
 };
 
-std::vector<bool> vitalsAreOk(const std::vector<Measurement>& measurements) {
-  std::vector<bool> results;
+std::vector<VITAL_STATUS> vitalsAreOk(const std::vector<Measurement>& measurements) {
+  std::vector<VITAL_STATUS> results;
   for(auto t = measurements.begin(); t != measurements.end(); t++) {
-    bool vitalResult = vitalCheckers[t->id]->measurementIsOk(t->measured_value);
+    VITAL_STATUS vitalResult = vitalCheckers[t->id]->measurementIsOk(t->measured_value);
     std::cout << "Vital-check result is " << vitalResult << std::endl;
     results.push_back(vitalResult);
   }
   return results;
 }
+
+VITAL_ALERT vitalAlerts(const std::vector<Measurement>& measurements, const std::vector<VITAL_STATUS>& vital_status) {
+  //TODO: add logic
+  return all_is_well;
+}
+
