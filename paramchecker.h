@@ -75,6 +75,7 @@ class VitalValueCheck: public IVitalCheck {
       {
         v_status = high;
       }
+      return v_status;
     }
   private:
     float m_alarmValue;
